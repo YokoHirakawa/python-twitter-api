@@ -6,20 +6,28 @@ from flask import jsonify
 from flask import request
 import time
 import os
-import sys
-from dotenv import load_dotenv
+import sys 
+from dotenv import load_dotenv,find_dotenv
 
 
 
+
+# get a token from "https://apps.twitter.com/app/new"
 load_dotenv(find_dotenv())
-TWITTER_CONSUMER_KEY = os.getenv("TWITTER_CONSUMER_KEY")
-TWITTER_CONSUMER_SECRET = os.getenv("TWITTER_CONSUMER_SECRET")
-TWITTER_ACCESS_TOKEN_KEY = os.getenv("TWITTER_ACCESS_TOKEN_KEY")
-TWITTER_ACCESS_TOKEN_SECRET = os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
+TWITTER_CONSUMER_KEY= os.getenv("TWITTER_CONSUMER_KEY")
+TWITTER_CONSUMER_SECRET=os.getenv("TWITTER_CONSUMER_SECRET")
+TWITTER_ACCESS_TOKEN_KEY=os.getenv("TWITTER_ACCESS_TOKEN_KEY")
+TWITTER_ACCESS_TOKEN_SECRET=os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
+
+
+api = twitter.Api(
+consumer_key=TWITTER_CONSUMER_KEY, 
+consumer_secret=TWITTER_CONSUMER_SECRET,
+access_token_key=TWITTER_ACCESS_TOKEN_KEY,
+access_token_secret=TWITTER_ACCESS_TOKEN_SECRET)
 
 app = Flask(__name__)
-# get a token from "https://apps.twitter.com/app/new"
-api = twitter.Api()
+	
 
 @app.route("/")
 def hello():
