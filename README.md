@@ -12,6 +12,10 @@ API endpoints that connect to the Twitter API and expose two RESTful endpoints:
 $ pip install -r requirements.txt
 $ FLASK_APP=helpers.py flask run
 ```
+# Token_key
+$ This app requires Twitter API credentials, which you can get from here:(https://developer.twitter.com/en/docs/basics/authentication/guides/access-tokens.html)
+$Once you have your tokens,copy the .env.sample to .env and insert them into the file.
+
 
 # Tests
 
