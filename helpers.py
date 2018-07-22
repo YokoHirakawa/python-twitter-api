@@ -54,13 +54,14 @@ def get_user_timeline(user):
 
 		sds = []
 		for s in statuses:
-			reply_count = 0
-			for m in mds:
-				if 'in_reply_to_status_id'in m and
-				m['in_reply_to_status_id'] == s ['id']:
-					reply_count += 1
+			# reply_count = 0
+			# for m in mds:
+			# 	if 'in_reply_to_status_id'in m and
+			# 	m['in_reply_to_status_id'] == s ['id']:
+			# 		reply_count +=1
 			# creates a dictionary representation of the objects
 			sd = s.AsDict()
+			t = time.strptime(sd["created_at"], "%a %b %d %H:%M:%S +0000 %Y")
 			ts = time.strftime('%b %d, %Y', t)
 			sd["created_at"]=ts
 			# create the status_id_to_reply_count entry
@@ -81,7 +82,12 @@ def get_user_timeline(user):
 		#	check if the in_reply_to_status_id field is present in our mention
 		#		check if that status id is present in our status_id_to_reply_count dict
 		#			if it is, we add 1 to the value in the dictionary (using that as the key)
-		
+		for m in mds:
+			if "in_reply_to_status_id" in m:
+				status_id=m["in_reply_to_status_id"]
+				if status_id in status_id_to_reply_count:
+					status_id_to_reply_count[status_id]+=1
+
 		# status_id_to_reply_count = {
 		# 	"13987198172489": 1,
 		# 	"12421412412121": 5,
