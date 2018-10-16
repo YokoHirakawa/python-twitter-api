@@ -1,4 +1,5 @@
 
+
 import twitter
 # creates own server
 from flask import Flask
@@ -8,6 +9,7 @@ import time
 import os
 import sys 
 from dotenv import load_dotenv,find_dotenv
+from flask_cors import CORS,cross_origin
 
 
 
@@ -27,13 +29,15 @@ access_token_key=TWITTER_ACCESS_TOKEN_KEY,
 access_token_secret=TWITTER_ACCESS_TOKEN_SECRET)
 
 app = Flask(__name__)
-	
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/")
 def hello():
     return "Hello World!"
 
 @app.route("/users/<user>")
+@cross_origin()
 # Fetches the sequence of public Status messages for a single user
 def get_user_timeline(user):
 	try:
@@ -125,13 +129,15 @@ def get_user_timeline(user):
 		exc_type, exc_obj, exc_tb = sys.exc_info()
 		fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
 		error = str(exc_type) + " " + str(fname) + " " + str(exc_tb.tb_lineno)
+		response="{'error':'Unable to communicate with Twitter - " + error + "}"
 		return app.response_class(
-			response="{'error':'Unable to communicate with Twitter - " + error + "}",
+			response=response,
 			status=408,
 			mimetype='application/json')
     
 
 @app.route("/hashtags/<hashtag>")
+@cross_origin()
 # Fetches the sequence of public Status messages for a single user
 def get_hashtag_timeline(hashtag):
 	try:
